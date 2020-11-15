@@ -9,8 +9,9 @@ def server():
         while True:
             server_socket.listen(1)
             connection, client_address = server_socket.accept()
-            print(connection.recv(64))
-            connection.sendall("this is a reply".encode("utf8"))
+            buffer_length = 9999
+            received_message = connection.recv(buffer_length).decode("utf8")
+            connection.sendall(received_message.encode("utf8"))
             connection.close()
     except KeyboardInterrupt:
         server_socket.close()
